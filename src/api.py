@@ -1,6 +1,4 @@
-import logging
 import db
-
 from model.question import Question
 from model.token import Token
 

@@ -9,5 +9,13 @@ class TokenWeight(Base):
     yes_weight = Column(Integer)
     no_weight = Column(Integer)
 
-    def __repr__(self):
-       return "<Token (token_id='%s', title='%s')>" % (self.token_id, self.title)
+    def format(self):
+        return {
+            'question_id': self.question_id
+            'token_id': self.token_id,
+            'yes_weight': yes_weight,
+            'no_weight': no_weight
+        }
+
+     __repr__(self):
+       return "<TokenWeight %s>" % (self.format())
