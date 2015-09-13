@@ -1,3 +1,10 @@
+import logging
+import db
+
+from model.question import Question
+
+session = db.Session()
+
 def get_token(token_id):
     return {
         'token_id': token_id,
@@ -7,16 +14,35 @@ def get_token(token_id):
     }
 
 def get_question(question_id):
-    return {
-        'question_id': question_id,
-        'text': 'what about thing %s?' % question_id,
-        'tokens': map(get_token, [3,6,7]),
-        'unset_tokens': map(get_token, [4,5]),
-        'has_unset_tokens': True
-    }
+    question = session.\
+                query(Question).\
+                filter(Question.question_id==question_id).one()
+    return question.format()
+
+def add_question(text):
+    question = Question(text=text)
+    session.add(question)
+    session.commit()
+    return question.format()
+
+def update_question(question_id, text):
+    question = session.\
+                query(Question).\
+                filter(Question.question_id==question_id).one()
+    question.text = text
+    session.commit()
+    return question.format()
+
+def delete_question(question_id):
+    question = session.\
+                query(Question).\
+                filter(Question.question_id==question_id).one()
+    session.delete(question)
+    session.commit()
+    return question.format()
 
 def get_game():
     return {
-        'questions': map(get_question, [3,4,5]),
+        'questions': [ q.format() for q in session.query(Question).all() ],
         'all_tokens': map(get_token, [3,4,5,6,7])
     }

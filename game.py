@@ -1,5 +1,6 @@
 import os
 import flask
+from flask import request, jsonify
 import sys
 import logging
 import pystache
@@ -20,3 +21,23 @@ def index():
 @app.route('/manage')
 def manage():
     return mustache_render('manage.mustache', api.get_game())
+
+# API routes
+
+@app.route('/api/question/<int:question_id>', methods = ['GET'])
+def get_question(question_id):
+    return jsonify(api.get_question(question_id))
+
+@app.route('/api/question', methods = ['POST'])
+def post_question():
+    text = request.form.get('text')
+    return jsonify(api.add_question(text))
+
+@app.route('/api/question/<int:question_id>', methods = ['PUT'])
+def update_question(question_id):
+    text = request.form.get('text')
+    return jsonify(api.update_question(question_id, text))
+
+@app.route('/api/question/<int:question_id>', methods = ['DELETE'])
+def delete_question(question_id):
+    return jsonify(api.delete_question(question_id))
