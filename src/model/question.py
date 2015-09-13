@@ -1,4 +1,6 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+from src.model.token_weight import TokenWeight
 from src.db import Base
 
 class Question(Base):
@@ -8,11 +10,13 @@ class Question(Base):
     text = Column(String)
     order = Column(Integer)
 
+    token_weights = relationship("TokenWeight")
+
     def format(self):
         return {
             'question_id': self.question_id,
             'text': self.text,
-            'tokens': None,
+            'tokens': [ tw.format() for tw in self.token_weights ],
             'unset_tokens': None,
             'has_unset_tokens': False
         }

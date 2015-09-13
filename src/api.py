@@ -1,6 +1,7 @@
 import db
 from model.question import Question
 from model.token import Token
+from src.model.token_weight import TokenWeight
 
 session = db.Session()
 
@@ -32,6 +33,43 @@ def delete_question(question_id):
     session.delete(question)
     session.commit()
     return question.format()
+
+# TokenWeights
+def get_token_weight(question_id, token_id):
+    token_weight = session. \
+                query(TokenWeight). \
+                filter(TokenWeight.question_id==question_id). \
+                filter(TokenWeight.token_id==token_id).one()
+    return token_weight.format()
+
+def add_token_weight(question_id, token_id, yes_weight, no_weight):
+    token_weight = TokenWeight(
+                        question_id=question_id, \
+                        token_id=token_id, \
+                        yes_weight=yes_weight, \
+                        no_weight=no_weight)
+    session.add(token_weight)
+    session.commit()
+    return token_weight.format()
+
+def update_token_weight(question_id, token_id, yes_weight, no_weight):
+    token_weight = session.\
+                query(TokenWeight).\
+                filter(TokenWeight.question_id==question_id). \
+                filter(TokenWeight.token_id==token_id).one()
+    token_weight.yes_weight = yes_weight
+    token_weight.no_weight = no_weight
+    session.commit()
+    return token_weight.format()
+
+def delete_token_weight(question_id, token_id):
+    token_weight = session.\
+                query(TokenWeight).\
+                filter(TokenWeight.question_id==question_id). \
+                filter(TokenWeight.token_id==token_id).one()
+    session.delete(token_weight)
+    session.commit()
+    return token_weight.format()
 
 # Tokens
 def get_token(token_id):

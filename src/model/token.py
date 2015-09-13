@@ -5,7 +5,7 @@ class Token(Base):
     __tablename__ = 'tokens'
 
     token_id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String)
+    title = Column(String, default="No title")
 
     def format(self):
         return {
