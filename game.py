@@ -41,3 +41,21 @@ def update_question(question_id):
 @app.route('/api/question/<int:question_id>', methods = ['DELETE'])
 def delete_question(question_id):
     return jsonify(api.delete_question(question_id))
+
+@app.route('/api/token/<int:token_id>', methods = ['GET'])
+def get_token(token_id):
+    return jsonify(api.get_token(token_id))
+
+@app.route('/api/token', methods = ['POST'])
+def post_token():
+    title = request.form.get('title')
+    return jsonify(api.add_token(title))
+
+@app.route('/api/token/<int:token_id>', methods = ['PUT'])
+def update_token(token_id):
+    title = request.form.get('title')
+    return jsonify(api.update_token(token_id, title))
+
+@app.route('/api/token/<int:token_id>', methods = ['DELETE'])
+def delete_token(token_id):
+    return jsonify(api.delete_token(token_id))

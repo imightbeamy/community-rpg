@@ -2,17 +2,11 @@ import logging
 import db
 
 from model.question import Question
+from model.token import Token
 
 session = db.Session()
 
-def get_token(token_id):
-    return {
-        'token_id': token_id,
-        'title': "Thing %d" % token_id,
-        'yes_effect': 6,
-        'no_effect': -5,
-    }
-
+# Quesetions
 def get_question(question_id):
     question = session.\
                 query(Question).\
@@ -41,8 +35,37 @@ def delete_question(question_id):
     session.commit()
     return question.format()
 
+# Tokens
+def get_token(token_id):
+    token = session.\
+                query(Token).\
+                filter(Token.token_id==token_id).one()
+    return token.format()
+
+def add_token(title):
+    token = Token(title=title)
+    session.add(token)
+    session.commit()
+    return token.format()
+
+def update_token(token_id, title):
+    token = session.\
+                query(Token).\
+                filter(Token.token_id==token_id).one()
+    token.title = title
+    session.commit()
+    return token.format()
+
+def delete_token(token_id):
+    token = session.\
+                query(Token).\
+                filter(Token.token_id==token_id).one()
+    session.delete(token)
+    session.commit()
+    return token.format()
+
 def get_game():
     return {
         'questions': [ q.format() for q in session.query(Question).all() ],
-        'all_tokens': map(get_token, [3,4,5,6,7])
+        'all_tokens': [ t.format() for t in session.query(Token).all() ],
     }
