@@ -1,0 +1,11 @@
+<ol class="list-group questions">
+    {{#questions}}
+        {{>templates/manage/question_row}}
+    {{/questions}}
+</ol>
+<form class="add-new-question form-inline">
+    <div class="col-xs-5 form-group">
+        <input type="text" name="text" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-sm btn-success">Add question</button>
+</form>
