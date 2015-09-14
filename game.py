@@ -4,6 +4,7 @@ from flask import request, jsonify
 import sys
 import logging
 import pystache
+import json
 from src import api
 
 app = flask.Flask(__name__)
@@ -16,7 +17,11 @@ def mustache_render(tpl_file, data):
 
 @app.route('/')
 def index():
-    return 'This is a game!'
+    data = {
+        'tokens': api.get_tokens(),
+        'questions': json.dumps(api.get_questions())
+    }
+    return mustache_render('game.mustache', data)
 
 @app.route('/manage')
 def manage():

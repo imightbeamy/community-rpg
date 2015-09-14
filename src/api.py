@@ -110,6 +110,14 @@ def delete_token(token_id):
     session.commit()
     return token.format()
 
+def get_tokens():
+    session = db.Session()
+    return [ t.format() for t in session.query(Token).all() ]
+
+def get_questions():
+    session = db.Session()
+    return [ q.format() for q in session.query(Question).all() ]
+
 def get_game():
     session = db.Session()
     return {

@@ -17,8 +17,6 @@ class Question(Base):
             'question_id': self.question_id,
             'text': self.text,
             'tokens': [ tw.format() for tw in self.token_weights ],
-            'unset_tokens': None,
-            'has_unset_tokens': False
         }
 
     def __repr__(self):
