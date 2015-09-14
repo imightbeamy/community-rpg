@@ -46,4 +46,19 @@ $('.questions')
             yes_weight: yes_weight,
             no_weight: no_weight
         });
+    })
+    .on('click', '.delete-weight', function(e) {
+        e.preventDefault();
+        var question_row = $(this).parents('li'),
+            token_row = $(this).parents('tr'),
+            question_id = question_row.attr("data-question-id"),
+            token_id = token_row.attr("data-token-id");
+
+        $.ajax({
+            url: '/api/question/' + question_id + '/token/' + token_id,
+            type: 'DELETE',
+            success: function() {
+                token_row.remove();
+            }
+        });
     });

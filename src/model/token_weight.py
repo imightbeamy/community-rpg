@@ -18,7 +18,7 @@ class TokenWeight(Base):
         return {
             'question_id': self.question_id,
             'token_id': self.token_id,
-            'title': self.token.title,
+            'title': self.token.title if self.token != None else "No title",
             'yes_weight': self.yes_weight,
             'no_weight': self.no_weight
         }

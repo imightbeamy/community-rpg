@@ -10,13 +10,13 @@
             </tr>
         </thead>
         {{#tokens}}
-            <tr>
+            <tr data-token-id="{{token_id}}">
                 <td>{{title}}</td>
                 <td>{{yes_weight}}</td>
                 <td>{{no_weight}}</td>
                 <td>
                     <button class="btn btn-sm btn-info">Edit</button>
-                    <button class="btn btn-sm btn-warning">Delete</button>
+                    <button class="delete-weight btn btn-sm btn-warning">Delete</button>
                 </td>
             </tr>
         {{/tokens}}

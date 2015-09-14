@@ -69,13 +69,14 @@ def update_token_weight(question_id, token_id, yes_weight, no_weight):
 
 def delete_token_weight(question_id, token_id):
     session = db.Session()
-    token_weight = session.\
+    token_weights = session.\
                 query(TokenWeight).\
                 filter(TokenWeight.question_id==question_id). \
-                filter(TokenWeight.token_id==token_id).one()
-    session.delete(token_weight)
+                filter(TokenWeight.token_id==token_id).all()
+    for token_weight in token_weights:
+        session.delete(token_weight)
     session.commit()
-    return token_weight.format()
+    return {}
 
 # Tokens
 def get_token(token_id):
